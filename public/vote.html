@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="./stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="./vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="./vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="./vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="./css/util.css">
+    <link rel="stylesheet" type="text/css" href="./css/main.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a id="navbar-brand" class="navbar-brand" href="../public/index.html"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto col-12 justify-content-end">
+            <li class="nav-item">
+                <p id="username" class="nav-link">User Name:</p>
+            </li>
+            <li class="nav-item">
+                <a id="login" class="nav-link" href="../public/login.html">登入</a>
+            </li>
+            <li class="nav-item">
+                <a id="logout" class="nav-link" onclick="logout()">登出</a>
+            </li>
+            <li class="nav-item">
+                <a id="changePass" class="nav-link"  href="../public/changePass.html">修改密碼</a>
+            </li>
+            <li class="nav-item">
+                <a id="vote" class="nav-link"  href="../public/vote.html">投票系統</a>
+            </li>
+            <li class="nav-item">
+                <a id="album" class="nav-link"  href="../public/album.html">相簿系統</a>
+            </li>
+          </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="form-inline justify-content-between">
+            <button class="btn btn-primary justify-content-end" type="submit" onclick="location.href='../public/addVote.html'">新增投票</button>
+            <form>
+                <input class="form-control" id="title" type="search" placeholder="Title" aria-label="Search">
+                <button class="btn btn-outline-primary" type="button" onclick="search()">搜尋</button>
+            </form>
+        </div>
+    </div>
+    <div class="container table100 ver1 m-b-110 mt-4">
+        <div class="table100-head">
+            <table>
+                <thead>
+                    <tr class="row100 head">
+                        <th class="cell100 column1"></th>
+                        <th class="cell100 column2"> 標題 </th>
+                        <th class="cell100 column5"> 發布人 </th>
+                        <th class="cell100 column6"> 日期 </th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+        <div class="table100-body js-pscroll">
+            <table>
+                <tbody id="votelist"></tbody>
+            </table>
+        </div>
+    </div>
+
+
+    
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    
+    <script src="./vendor/bootstrap/js/popper.js"></script>
+    <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./vendor/select2/select2.min.js"></script>
+    <script src="./vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
+    <script src="./javascripts/header.js"></script>
+    <script src="./javascripts/vote.js"></script>
+    
+</body>
+</html>
