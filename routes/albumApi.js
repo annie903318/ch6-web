@@ -81,9 +81,9 @@ router.post("/delete",function(req,res,next){
         }else{
             var path="."+req.body.path;
             fs.unlink(path,(err) => {
-                // if (err) {
-                //     res.json({"status":1,"msg":"error"});
-                // }
+                if (err) {
+                    res.json({"status":1,"msg":"error"});
+                }
             });
             data.photos.forEach((element,index) => {
                 if(element==req.body.photo){
