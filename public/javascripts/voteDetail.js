@@ -4,9 +4,6 @@ function getUrlVal(val){
     var vars=query.split("&");
     for(var i=0;i<vars.length;i++){
         var pair=vars[i].split("=");
-        // if(pair[0]==val){
-        //     return pair[1];
-        // }
         return pair[1];
     }
 }
@@ -14,10 +11,7 @@ function getUrlVal(val){
 function initVoteDetail(data){
     var head=`
         <h3>
-            ${data.name}
-            (<a class="person" href="vote.html?account=${data.account}">
-                ${data.account}
-            </a>)
+            ${data.name}(${data.account})
         </h3>`;   
     $("#a_head").append(head);
     var content=`<h2 class="a_title">${data.title}</h2>`;

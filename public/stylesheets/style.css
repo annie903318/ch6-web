@@ -54,3 +54,7 @@ body{
     text-align: center;
     padding: 1rem 0;
 }
+#type{
+    width: auto!important;
+    display: inline!important;
+}

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>新增投票</title>
+    <title>文章內容</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="./stylesheets/style.css">
 </head>
@@ -14,7 +14,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul id="navbar" class="navbar-nav mr-auto col-12 justify-content-end">
+          <ul class="navbar-nav mr-auto col-12 justify-content-end">
             <li class="nav-item">
                 <p id="username" class="nav-link">User Name:</p>
             </li>
@@ -42,41 +42,31 @@
 
     <div class="container mt-4">
         <form>
-            <h1>新增投票</h1>
             <div class="form-row justify-content-end">
-                <button type="button" class="btn btn-danger" onclick="location.href='../public/vote.html'">回上一頁</button>
+                <button type="button" class="btn btn-danger" onclick="location.href='../public/blog.html'">回上一頁</button>
             </div>
-            <div class="form-group">
-                <label>標題</label>
-                <input type="text" id="title" autocomplete="off" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label>選項</label>
-                <input type="text" id="option" autocomplete="off" class="form-control">
-            </div>
-            <ol id="option-group">
-
-            </ol>
             <div class="form-row">
-                <button type="button" class="btn btn-success" onclick="pushOption()">加入</button>
-            </div>  
-            <div class="form-row justify-content-end">
-                <button type="button" class="btn btn-primary" onclick="addVote()">送出</button>
-            </div>  
+                <img id="avatar" src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSih2P2RGOXioy74d5f9nSYV1FdfMQiaWs4Qw&usqp=CAU">
+                <div id="a_head" class="pl-3 mt-3"></div>
+            </div>
+            <div class="form-group">
+                <div id="a_content"></div>
+            </div>
+            <div class="form-group">
+                <div id="a_comment"></div>
+            </div>
         </form>
     </div>
     
-    
-
-
-
 
 
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    
     <script src="./javascripts/header.js"></script>
-    <script src="./javascripts/addVote.js"></script>
+    <script src="./javascripts/article.js"></script>
+    
 </body>
 </html>

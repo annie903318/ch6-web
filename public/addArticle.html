@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>相簿</title>
+    <title>新增文章</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="./stylesheets/style.css">
@@ -18,7 +18,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto col-12 justify-content-end">
+            <ul id="navbar" class="navbar-nav mr-auto col-12 justify-content-end">
                 <li class="nav-item">
                     <p id="username" class="nav-link">User Name:</p>
                 </li>
@@ -38,34 +38,45 @@
                     <a id="album" class="nav-link" href="../public/album.html">相簿</a>
                 </li>
                 <li class="nav-item">
-                    <a id="blog" class="nav-link"  href="../public/blog.html">論壇</a>
+                    <a id="blog" class="nav-link" href="../public/blog.html">論壇</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-    <div id="albumList" class="container mt-4">
-        <div class="row">
+    <div class="container mt-4">
+        <form>
+            <h1>發文</h1>
+            <div class="form-row justify-content-end">
+                <button type="button" class="btn btn-danger" onclick="location.href='../public/blog.html'">回上一頁</button>
+            </div>
             <div>
-                <img id="u_img" class="pr-3" src="https://fakeimg.pl/300x250/">
-                <input type="file" class="form-control-file pt-3 pb-3" id="u_img_file" name="photo">
-                <button class="btn btn-info" onclick="upload()"> 上傳相片 </button>
+                <label class="pr-3">看版</label>
+                <select id="type" class="form-control">
+                    <option>有趣</option>
+                    <option>心情</option>
+                    <option>分享</option>
+                    <option>廢文</option>
+                </select>
             </div>
-            <div class="form-style pl-3">
-                <h1>相簿</h1>
-                <div id="gallery"></div>
+            <div class="pr-3">
+                <label>標題</label>
+                <input type="text" id="title" autocomplete="off" class="form-control" required>
             </div>
-        </div>
+            <div class="pr-3">
+                <label>內文</label>
+                <textarea id="content" rows="5" autocomplete="off" class="form-control" required></textarea>
+            </div>
+
+            <div class="form-row justify-content-end pt-3">
+                <button type="submit" class="btn btn-primary" onclick="addArticle()">送出</button>
+            </div>
+        </form>
     </div>
 
-    <div id="previewbg"></div>
-    <div id="preview" class="d-flex justify-content-center">
-        <button type="button" id="closeBtn" class="btn btn-danger" onclick="closeDialog()">x</button>
-        <img id="displayImage" />
-    </div>
-    <div id="wrap">
-        <button type="button" class="btn btn-primary ml-2" onclick="remove()">刪除</button>
-    </div>
+
+
+
 
 
 
@@ -78,8 +89,7 @@
         integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
         crossorigin="anonymous"></script>
     <script src="./javascripts/header.js"></script>
-    <script src="./javascripts/album.js"></script>
-
+    <script src="./javascripts/addArticle.js"></script>
 </body>
 
 </html>

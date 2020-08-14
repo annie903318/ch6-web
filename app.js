@@ -11,6 +11,7 @@ var voteRouter = require('./routes/voteApi');
 var memberRouter = require('./routes/memberApi');
 const { static } = require('express');
 var albumRouter=require("./routes/albumApi");
+var blogRouter=require("./routes/blogApi");
 
 var app = express();
 
@@ -31,6 +32,7 @@ app.use("/vote",voteRouter);
 app.use("/member",memberRouter);
 app.use("/public",express.static("public"));
 app.use("/album",albumRouter);
+app.use("/blog",blogRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

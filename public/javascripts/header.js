@@ -6,6 +6,7 @@ if($.cookie("userID")=="" ||$.cookie("userID")==null){
     $("#username").hide();
     $("#logout").hide();
     $("#album").hide();
+    $("#blog").hide();
 }else{
     $("#login").hide();
     $("#changePass").show();
@@ -13,6 +14,7 @@ if($.cookie("userID")=="" ||$.cookie("userID")==null){
     $("#username").text("UserName : "+$.cookie("userName"));
     $("#logout").show();
     $("#album").show();
+    $("#blog").show();
 }
 function logout(){
     $.removeCookie("userID");
