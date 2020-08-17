@@ -47,17 +47,16 @@ function initArticleDetail(data) {
             <div id="${element.id}" class="container">
                 <div class="row mb-3">
                     <span style="color:pink" class="pr-3">#${element.id}</span>
-                    <img src="https://avatars1.githubusercontent.com/u/8498023?s=460&u=6b172a85c3a57446b0a9cb950e6424b288e41145&v=4" style="height:50px;width:50px;"/>
+                    <img src="/public/photos/avatar2.jpg" style="height:50px;width:50px;"/>
                     <div>
                         <span class="pl-3">${element.account}</span><br/>
                         <span class="pl-3">${commentDate}</span><br/>
                         <span class="pl-3">${element.message}</span><br/>
                     </div>
                     <h5>
-                        <a class="person badge badge-warning badge-pill" href="javascript:editComment()">編輯</a>
-                        <a class="${element.id} person badge badge-light badge-pill" href="javascript:deleteComment()">刪除</a>
+                        <a id="edit${element.id}" class="commentEdit badge badge-warning badge-pill" href="javascript:editComment()">編輯</a>
+                        <a id="del${element.id}" class="commentDelete badge badge-light badge-pill" href="javascript:deleteComment()">刪除</a>
                     </h5>
-                    
                     <button type="button" class="ml-3 mt-3 mb-3 badge badge-light" style="float:right" onclick="commentPushlike()">
                     👍 <span class="badge badge-light">${element.like.length}</span>
                     </button>
@@ -65,6 +64,7 @@ function initArticleDetail(data) {
             </div>
         `;
     });
+    // href="javascript:deleteComment()"
     comment+=`<div class="form-group row mt-2 mb-2">
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="commentBar" placeholder="留言..." autocomplete="off">
@@ -168,17 +168,47 @@ function commentPushlike(){
 }
 //編輯留言
 function editComment(){
-
+    //點擊後取得id
+    //todo
+    $(".commentEdit").each(function(){
+        $(this).click(
+            function(){
+                commentId=$(this).attr("id");
+                console.log(commentId);
+            }
+        );
+    });
 }
 //刪除留言
+//QQQQ 點2次才能刪除
+//QQQQ 網頁有時候會斷掉
 function deleteComment(){
-    // $.post("/blog/deleteComment",{
-    //     "_id":getUrlVal("_id"),
-    // },function(res){
-    //     if(res.status==0){
-    //         history.go(0);
-    //     }else{
-    //         alert("Error");
-    //     }
+    //點擊後取得id
+    var commentId="";
+    $('.commentDelete').on('click',function(){
+        console.log("123");
+    });
+
+
+
+    // $(".commentDelete").each(function(e){
+    //     console.log($(this).attr('id'));
+    //     $(this).click(
+    //         function(){
+    //             console.log(this);
+    //             commentId=$(this).attr("id");
+    //             console.log(commentId);
+    //             $.post("/blog/deleteComment",{
+    //                 "_id":getUrlVal("_id"),
+    //                 "id":commentId.replace("del","")
+    //             },function(res){
+    //                 if(res.status==0){
+    //                     history.go(0);
+    //                 }else{
+    //                     alert("Error");
+    //                 }
+    //             });
+    //         }
+    //     );
     // });
 }

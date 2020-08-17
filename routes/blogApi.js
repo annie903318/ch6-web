@@ -149,14 +149,15 @@ router.post("/editComment",function(req,res){
             req.body._id
         ,function(err,data){
             data.comment.forEach(element => {
-                if(element.id==parseInt(req.body.id)){
+                if(element.id==req.body.id){
                     var key=data.comment.indexOf(element);
+                    //QQQQ postman terminal有改值但資料庫沒改值
                     data.comment[key].message=req.body.message;
                     data.save(function(err){
                         if(err){
                             res.json({"status":1,"msg":"error"});
                         }else{
-                            res.json({"status":0,"msg":"success"});
+                            res.json({"status":0,"msg":"success","comment":data.comment});
                         }
                     });
                 }
@@ -164,20 +165,48 @@ router.post("/editComment",function(req,res){
     });
 });
 //刪除回應
+//QQQQ 刪除最後一筆後新增的留言id
 router.post("/deleteComment",function(req,res){
     articleModel.findById(
         req.body._id
     ,function(err,data){
         data.comment.forEach(element => {
-            if(element.id==parseInt(req.body.id)){
-                data.comment.splice(element.id,1);
+            if(element.id==req.body.id){
+                var commentIndex=data.comment.indexOf(element);
+                data.comment.splice(commentIndex,1);
                 data.save(function(err){
                     if(err){
                         res.json({"status":1,"msg":"error"});
                     }else{
-                        res.json({"status":0,"msg":"success"});
+                        res.json({"status":0,"msg":"success","comment":data.comment});
                     }
                 });
+            }
+        });
+    });
+});
+//按讚留言
+router.post("/commentPushlike",function(req,res){
+    articleModel.findById(req.body._id,function(err,data){
+        data.comment.forEach(element=>{
+            var like=element.like;
+            if(element.id==req.body.id){
+                if(like.indexOf(req.body.account)<0){
+                    //按讚
+                    like.push(req.body.account); 
+                }else{
+                    //收回
+                    like.splice(like.indexOf(req.body.account),1);
+                }
+                //QQQQ postman terminal有改值但資料庫沒改值
+                data.save(function(err){
+                    if(err){
+                        res.json({"status":1,"msg":"error"});
+                    }else{
+                        res.json({"status":0,"msg":"success","comment":data.comment});
+                    }
+                });
+                console.log(...data.comment);
             }
         });
     });
