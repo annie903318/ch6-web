@@ -28,7 +28,6 @@ function upload() {
         },
         error: function (err) {
             alert("上傳失敗!");
-            console.log(err);
         }
     });
 }

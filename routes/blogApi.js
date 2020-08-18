@@ -120,6 +120,7 @@ router.post("/pushlike",function(req,res){
     });
 });
 //回應文章
+var delTotal=0;
 router.post("/addComment",function(req,res){
     articleModel.findById(req.body._id,function(err,data){
         var newID=0;
@@ -127,7 +128,7 @@ router.post("/addComment",function(req,res){
             newID=Math.max(...data.comment.map(p=>p.id));
         }
         var newcomment={
-            id:newID+1,
+            id:delTotal+newID+1,
             account:req.body.account,
             message:req.body.message,
             like:[],
@@ -141,53 +142,59 @@ router.post("/addComment",function(req,res){
                 res.json({"status":0,"msg":"success"});
             }
         });
+        delTotal=0;
     });
 });
 //修改回應
 router.post("/editComment",function(req,res){
     articleModel.findById(
-            req.body._id
-        ,function(err,data){
-            data.comment.forEach(element => {
-                if(element.id==req.body.id){
-                    var key=data.comment.indexOf(element);
-                    //QQQQ postman terminal有改值但資料庫沒改值
-                    data.comment[key].message=req.body.message;
-                    data.save(function(err){
-                        if(err){
-                            res.json({"status":1,"msg":"error"});
-                        }else{
-                            res.json({"status":0,"msg":"success","comment":data.comment});
-                        }
-                    });
-                }
-            });
+        req.body._id
+    ,function(err,data){
+        data.comment.forEach(element => {
+            if(element.id==req.body.id){
+                var key=data.comment.indexOf(element);
+                data.comment[key].message=req.body.message;
+            }
+        });
+        data.update(function(err){
+            if(err){
+                res.json({"status":1,"msg":"error"});
+            }else{
+                res.json({"status":0,"msg":"success","comment":data.comment});
+            }
+        });
     });
 });
 //刪除回應
-//QQQQ 刪除最後一筆後新增的留言id
 router.post("/deleteComment",function(req,res){
     articleModel.findById(
         req.body._id
     ,function(err,data){
         data.comment.forEach(element => {
             if(element.id==req.body.id){
+                if(element.id==Math.max(...data.comment.map(p=>p.id))){
+                    delTotal+=1;
+                }else{
+                    delTotal=0;
+                }
                 var commentIndex=data.comment.indexOf(element);
                 data.comment.splice(commentIndex,1);
-                data.save(function(err){
-                    if(err){
-                        res.json({"status":1,"msg":"error"});
-                    }else{
-                        res.json({"status":0,"msg":"success","comment":data.comment});
-                    }
-                });
+            }
+        });
+        data.save(function(err){
+            if(err){
+                res.json({"status":1,"msg":"error"});
+            }else{
+                res.json({"status":0,"msg":"success"});
             }
         });
     });
 });
-//按讚留言
+//按讚回應
 router.post("/commentPushlike",function(req,res){
-    articleModel.findById(req.body._id,function(err,data){
+    articleModel.findById(
+        req.body._id
+    ,function(err,data){
         data.comment.forEach(element=>{
             var like=element.like;
             if(element.id==req.body.id){
@@ -198,15 +205,13 @@ router.post("/commentPushlike",function(req,res){
                     //收回
                     like.splice(like.indexOf(req.body.account),1);
                 }
-                //QQQQ postman terminal有改值但資料庫沒改值
-                data.save(function(err){
-                    if(err){
-                        res.json({"status":1,"msg":"error"});
-                    }else{
-                        res.json({"status":0,"msg":"success","comment":data.comment});
-                    }
-                });
-                console.log(...data.comment);
+            }
+        });
+        data.save(function(err){
+            if(err){
+                res.json({"status":1,"msg":"error"});
+            }else{
+                res.json({"status":0,"msg":"success"});
             }
         });
     });

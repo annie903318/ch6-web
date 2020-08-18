@@ -19,7 +19,7 @@ function initArticleDetail(data) {
                   <a class="person badge badge-light badge-pill" href="javascript:deleteArticle()">刪除</a>
                </h5>`;
     }
-        
+
     $("#a_head").append(head);
     var a_date = new Date(data.postdate);
     var date = `${a_date.getMonth() + 1}月${a_date.getDate()}日  ${a_date.getHours()<10?"0"+a_date.getHours():a_date.getHours()}:${a_date.getMinutes()<10?"0"+a_date.getMinutes():a_date.getMinutes()}`;
@@ -51,20 +51,19 @@ function initArticleDetail(data) {
                     <div>
                         <span class="pl-3">${element.account}</span><br/>
                         <span class="pl-3">${commentDate}</span><br/>
-                        <span class="pl-3">${element.message}</span><br/>
+                        <span id="message${element.id}" class="pl-3">${element.message}</span><br/>
                     </div>
                     <h5>
-                        <a id="edit${element.id}" class="commentEdit badge badge-warning badge-pill" href="javascript:editComment()">編輯</a>
-                        <a id="del${element.id}" class="commentDelete badge badge-light badge-pill" href="javascript:deleteComment()">刪除</a>
+                        <a id="edit${element.id}" class="badge badge-warning badge-pill" href="javascript:editComment(${element.id})">編輯</a>
+                        <a class="badge badge-light badge-pill" href="javascript:deleteComment(${element.id})">刪除</a>
                     </h5>
-                    <button type="button" class="ml-3 mt-3 mb-3 badge badge-light" style="float:right" onclick="commentPushlike()">
+                    <button type="button" class="ml-3 mt-3 mb-3 badge badge-light" style="float:right" onclick="commentPushlike(${element.id})">
                     👍 <span class="badge badge-light">${element.like.length}</span>
                     </button>
                 </div>
             </div>
         `;
     });
-    // href="javascript:deleteComment()"
     comment+=`<div class="form-group row mt-2 mb-2">
                 <div class="col-sm-10">
                     <input type="text" class="form-control" id="commentBar" placeholder="留言..." autocomplete="off">
@@ -156,59 +155,64 @@ function addComment(){
         "message":$("#commentBar").val()
     },function(res){
         if(res.status==0){
-            history.go(0);
+            window.location.reload();
         }else{
             alert("Error");
         }
     });
 }
 //按讚留言
-function commentPushlike(){
-
+function commentPushlike(id){
+    $.post("/blog/commentPushlike",{
+        "_id":getUrlVal("id"),
+        "account":$.cookie("userID"),
+        "id":id
+    },function(res){
+        if(res.status==0){
+            history.go(0);
+        }else{
+            alert("Error");
+        }
+    })
 }
 //編輯留言
-function editComment(){
-    //點擊後取得id
-    //todo
-    $(".commentEdit").each(function(){
-        $(this).click(
-            function(){
-                commentId=$(this).attr("id");
-                console.log(commentId);
-            }
-        );
-    });
+function editComment(id){
+    var msg=$(`#message${id}`);
+    var btnVal=$(`#edit${id}`);
+    var editArea=`<input id="inp${id}" class="ml-3" type="text" autocomplete="off"/>`;
+    if(btnVal.text()=="編輯"){
+        msg.hide();
+        msg.after(editArea);
+        btnVal.text("完成");
+    }else{
+        var newMsg=$(`#inp${id}`).val();
+        $(`#inp${id}`).remove();
+        if(newMsg){
+            $.post("/blog/editComment",{
+                "_id":getUrlVal("_id"),
+                "id":id,
+                "message":newMsg
+            },function(res){
+                if(res.status==0){
+                    history.go(0);
+                }
+            });
+        }
+        msg.show();
+        btnVal.text("編輯");
+    }
 }
 //刪除留言
-//QQQQ 點2次才能刪除
-//QQQQ 網頁有時候會斷掉
-function deleteComment(){
-    //點擊後取得id
-    var commentId="";
-    $('.commentDelete').on('click',function(){
-        console.log("123");
+function deleteComment(id){
+    $.post("/blog/deleteComment",{
+        "_id":getUrlVal("_id"),
+        "id":id
+    },function(res){
+        if(res.status==0){
+            window.location.reload();
+        }else{
+            alert("Error");
+        }
     });
-
-
-
-    // $(".commentDelete").each(function(e){
-    //     console.log($(this).attr('id'));
-    //     $(this).click(
-    //         function(){
-    //             console.log(this);
-    //             commentId=$(this).attr("id");
-    //             console.log(commentId);
-    //             $.post("/blog/deleteComment",{
-    //                 "_id":getUrlVal("_id"),
-    //                 "id":commentId.replace("del","")
-    //             },function(res){
-    //                 if(res.status==0){
-    //                     history.go(0);
-    //                 }else{
-    //                     alert("Error");
-    //                 }
-    //             });
-    //         }
-    //     );
-    // });
 }
+

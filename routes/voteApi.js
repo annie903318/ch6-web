@@ -58,7 +58,6 @@ router.get("/getVoteById",function(req,res){
         }else{
             if(err){
                 res.json({"status":1,"msg":"error"});
-                console.log("error");
             }else{
                 res.json({"status":0,"msg":"success","data":data[0]});
             }
