@@ -9,36 +9,55 @@ function getUrlVal(val) {
 }
 //供getArticleDetail()呼叫
 function initArticleDetail(data) {
-    var head = `
-        <h3>
-            ${data.name}(${data.account})
-        </h3>`;
-    if($.cookie("userID")==data.account){
-        head+=`<h5>
-                  <a class="person badge badge-warning badge-pill" href="javascript:showArticlerow()">修改</a>
-                  <a class="person badge badge-light badge-pill" href="javascript:deleteArticle()">刪除</a>
-               </h5>`;
-    }
-
-    $("#a_head").append(head);
     var a_date = new Date(data.postdate);
-    var date = `${a_date.getMonth() + 1}月${a_date.getDate()}日  ${a_date.getHours()<10?"0"+a_date.getHours():a_date.getHours()}:${a_date.getMinutes()<10?"0"+a_date.getMinutes():a_date.getMinutes()}`;
-    var content = `<h1 class="a_title mt-3 mb-3">${data.title}</h1>
-                <h4><span class="badge badge-info">${data.type}</span>&nbsp&nbsp${date}</h4>
-                <h5 id="content">${data.content}</h5>
-                <button type="button" class="mt-2 mb-2 badge badge-primary" onclick="pushlike()">
-                    讚 <span class="badge badge-light">${data.like.length}</span>
-                </button>
-                
-                <div id="editRow" style="display:none">
-                    <textarea id="editContent" rows="5" column="50" class="form-control"></textarea>
-                    <button type="button" class="btn btn-warning mt-3 mb-3" onclick="editArticle()">送出</button>            
+    var date = `${a_date.getMonth() + 1}/${a_date.getDate()}  ${a_date.getHours()<10?"0"+a_date.getHours():a_date.getHours()}:${a_date.getMinutes()<10?"0"+a_date.getMinutes():a_date.getMinutes()}`;
+    var content = `
+    <div class="form-row">
+        <div class="col-6">
+            <img class="col-12" src="https://cdn.pixabay.com/photo/2020/07/05/03/20/desert-5371434_960_720.jpg">
+        </div>
+        <div class="col-6 pl-5">
+            <h3>
+                <img class="avatar" src="/public/photos/avatar1.jpg">
+                ${data.account}
+            </h3>
+            
+            <div class="pl-2">
+                <h1 class="pr-4">${data.title}</h1>
+                <div class="row">
+                    <h5 class="pl-4">-- ${date}</h5>
+                    <h4 class="pl-4"><span class="badge badge-success">${data.type}</span></h4>
                 </div>
-                `;
+                
+            </div>
+            <h4 id="editBtnGroup">
+                <a class="person badge badge-warning badge-pill" href="javascript:showArticlerow()">修改</a>
+                <a class="person badge badge-light badge-pill" href="javascript:deleteArticle()">刪除</a>
+            </h4>
+            <h4 id="content" class="pt-2 pb-2">${data.content}</h4>
+            
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-gray col-5" onclick="pushlike()">
+                    讚
+                    <span class="badge badge-light">${data.like.length}</span>
+                </button>
+                <button type="button" id="moveToComment" class="btn btn-gray col-5">
+                    留言
+                    <span class="badge badge-light">${data.comment.length}</span>
+                </button>
+            </div>
+            
+            <div id="editRow" style="display:none">
+                <textarea id="editContent" rows="5" column="50" class="form-control"></textarea>
+                <button type="button" class="btn btn-warning mt-3 mb-3" onclick="editArticle()">送出</button>            
+            </div>
+        </div>
+    </div>    
+              `;
     $("#a_content").append(content);
 
     //回應文章
-    var comment="<h4>回應</h4>";
+    var comment="<h4 class='mt-4 mb-3'>回應</h4>";
     var i=1;
     data.comment.forEach(element => {
         var date=new Date(element.date);
@@ -46,8 +65,7 @@ function initArticleDetail(data) {
         comment+=`
             <div id="${element.id}" class="container">
                 <div class="row mb-3">
-                    <span style="color:pink" class="pr-3">#${element.id}</span>
-                    <img src="/public/photos/avatar2.jpg" style="height:50px;width:50px;"/>
+                    <img class="avatar" src="/public/photos/avatar2.jpg" style="height:50px;width:50px;"/>
                     <div>
                         <span class="pl-3">${element.account}</span><br/>
                         <span class="pl-3">${commentDate}</span><br/>
@@ -74,6 +92,10 @@ function initArticleDetail(data) {
             </div>`;
 
     $("#a_comment").append(comment);
+
+    if($.cookie("userID")!=data.account){
+        $("#editBtnGroup").hide();
+    }
 }
 //呼叫後端API取得文章內容
 function getArticleDetail() {
@@ -169,7 +191,7 @@ function commentPushlike(id){
         "id":id
     },function(res){
         if(res.status==0){
-            history.go(0);
+            // history.go(0);
         }else{
             alert("Error");
         }
@@ -194,7 +216,7 @@ function editComment(id){
                 "message":newMsg
             },function(res){
                 if(res.status==0){
-                    history.go(0);
+                    // history.go(0);
                 }
             });
         }
@@ -215,4 +237,11 @@ function deleteComment(id){
         }
     });
 }
-
+//點留言時移至最底部的留言輸入框
+$(document).ready(function() {
+    $(function(){ $('#moveToComment').click(function(){ 
+      $('html,body').animate({
+        scrollTop:$('#commentBar').offset().top-60}, 500);
+      });  
+    });   
+});

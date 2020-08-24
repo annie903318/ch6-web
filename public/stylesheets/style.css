@@ -1,11 +1,7 @@
 body{
-    background-color: #363636!important;
-    color: #ffffff!important;
-}
-#avatar{
-    width: 80px;
-    height: 80px;
-    float: left;
+    background-color: #EFE6DD!important;
+    color: #231F20!important;
+    font-family: "Microsoft YaHei","黑體",Arial,fantasy,sans-serif ;
 }
 .form-group{
     overflow: hidden;
@@ -31,8 +27,7 @@ body{
     position: absolute;
     top:0;
     left:0;
-    background-color: #ffffff;
-    opacity: 80%;
+    background-color: #0000008c;
     height: 100vh;
     width: 100vw;
 }
@@ -56,5 +51,19 @@ body{
 }
 #type{
     width: auto!important;
+    display: inline!important;
+}
+.avatar{
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+}
+.navbar,.bg-pink{
+    background-color:#fd5c72!important;
+}
+.btn-gray{
+    background-color:#c3c3c3;
+}
+.btn-group{
     display: inline!important;
 }

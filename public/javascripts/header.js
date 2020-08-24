@@ -2,7 +2,8 @@ document.getElementById("navbar-brand").innerHTML="Test";
 
 if($.cookie("userID")=="" ||$.cookie("userID")==null){
     $("#login").show();
-    $("#changePass").hide();
+    $("#changePass").hide()
+    $("#vote").hide();
     $("#username").hide();
     $("#logout").hide();
     $("#album").hide();
@@ -10,6 +11,7 @@ if($.cookie("userID")=="" ||$.cookie("userID")==null){
 }else{
     $("#login").hide();
     $("#changePass").show();
+    $("#vote").show();
     $("#username").show();
     $("#username").text("UserName : "+$.cookie("userName"));
     $("#logout").show();

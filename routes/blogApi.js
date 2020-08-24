@@ -152,11 +152,11 @@ router.post("/editComment",function(req,res){
     ,function(err,data){
         data.comment.forEach(element => {
             if(element.id==req.body.id){
-                var key=data.comment.indexOf(element);
-                data.comment[key].message=req.body.message;
+                var commentIndex=data.comment.indexOf(element);
+                data.comment[commentIndex].message=req.body.message;
             }
         });
-        data.update(function(err){
+        data.save(function(err){
             if(err){
                 res.json({"status":1,"msg":"error"});
             }else{
@@ -211,7 +211,7 @@ router.post("/commentPushlike",function(req,res){
             if(err){
                 res.json({"status":1,"msg":"error"});
             }else{
-                res.json({"status":0,"msg":"success"});
+                res.json({"status":0,"msg":"success","comment":data.comment});
             }
         });
     });
