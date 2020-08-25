@@ -159,8 +159,10 @@ router.post("/editComment",function(req,res){
         data.save(function(err){
             if(err){
                 res.json({"status":1,"msg":"error"});
+                console.log("error");
             }else{
                 res.json({"status":0,"msg":"success","comment":data.comment});
+                console.log("success");
             }
         });
     });

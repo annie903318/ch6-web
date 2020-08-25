@@ -18,7 +18,7 @@ function initArticleDetail(data) {
         </div>
         <div class="col-6 pl-5">
             <h3>
-                <img class="avatar" src="/public/photos/avatar1.jpg">
+                <img class="avatar" src="/public/assets/avatar1.jpg">
                 ${data.account}
             </h3>
             
@@ -38,10 +38,12 @@ function initArticleDetail(data) {
             
             <div class="btn-group" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-gray col-5" onclick="pushlike()">
+                    <img class="articleIcon" src="/public/assets/like.svg" />
                     讚
                     <span class="badge badge-light">${data.like.length}</span>
                 </button>
                 <button type="button" id="moveToComment" class="btn btn-gray col-5">
+                    <img class="articleIcon" src="/public/assets/comment.svg" />
                     留言
                     <span class="badge badge-light">${data.comment.length}</span>
                 </button>
@@ -55,7 +57,6 @@ function initArticleDetail(data) {
     </div>    
               `;
     $("#a_content").append(content);
-
     //回應文章
     var comment="<h4 class='mt-4 mb-3'>回應</h4>";
     var i=1;
@@ -65,7 +66,7 @@ function initArticleDetail(data) {
         comment+=`
             <div id="${element.id}" class="container">
                 <div class="row mb-3">
-                    <img class="avatar" src="/public/photos/avatar2.jpg" style="height:50px;width:50px;"/>
+                    <img class="avatar" src="/public/assets/avatar2.jpg" style="height:50px;width:50px;"/>
                     <div>
                         <span class="pl-3">${element.account}</span><br/>
                         <span class="pl-3">${commentDate}</span><br/>

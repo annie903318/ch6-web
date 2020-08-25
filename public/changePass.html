@@ -40,26 +40,29 @@
         </div>
     </nav>
 
-
-    <div class="container mt-4">
-        <form>
-            <h1>修改密碼</h1>
-            <div class="form-row justify-content-end">
-                <button type="button" class="btn btn-danger" onclick="location.href='../public/index.html'">回首頁</button>
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <div class="login100-form-title" style="background-image: url(/public/assets/changepass.jpg);">
+                <h1>修改密碼</h1>
             </div>
-            <div class="form-group">
-              <label>舊密碼</label>
-              <input type="password" id="oldPass" autocomplete="off" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label>新密碼</label>
-                <input type="password" id="newPass" autocomplete="off" class="form-control" required>
-            </div>
-            <div class="form-row justify-content-end">
-                <button type="submit" class="btn btn-primary" onclick="changePass()">確認</button>
-            </div>  
-        </form>
+            <form class="login100-form">
+                <div class="wrap-input100 validate-input m-b-26">
+                    <span class="label-input100">舊密碼</span>
+                    <input class="input100" type="password" id="oldPass" autocomplete="off" required>
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="wrap-input100 validate-input m-b-18">
+                    <span class="label-input100">新密碼</span>
+                    <input class="input100" type="password" id="newPass" autocomplete="off" required>
+                    <span class="focus-input100"></span>
+                </div>
+                <div class="container-login100-form-btn mt-4 pl-3">
+                    <button type="submit" class="login100-form-btn btn-primary ml-5" onclick="changePass()">確認</button>
+                </div> 
+            </form>
+        </div>
     </div>
+
 
     
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
