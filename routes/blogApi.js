@@ -139,7 +139,7 @@ router.post("/addComment",function(req,res){
             if(err){
                 res.json({"status":1,"msg":"error"});
             }else{
-                res.json({"status":0,"msg":"success"});
+                res.json({"status":0,"msg":"success","comment":data.comment});
             }
         });
         delTotal=0;
